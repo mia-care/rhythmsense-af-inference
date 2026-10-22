@@ -1,0 +1,12 @@
+[project]
+name = "rhythmsense-af-inference"
+version = "1.3.0"
+description = "RhythmSense AF Inference Engine: irregular heart rhythm classification from PPG (IEC 62304 class B software item)"
+requires-python = ">=3.12"
+license = { text = "Proprietary" }
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+junit_family = "xunit2"
+junit_suite_name = "rhythmsense-af-inference"

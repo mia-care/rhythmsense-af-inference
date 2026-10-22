@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run unit tests
+        run: python -m pytest --junitxml=reports/junit.xml
+
+      - name: Publish JUnit report
+        uses: mikepenz/action-junit-report@v4
+        if: always()
+        with:
+          report_paths: reports/junit.xml
+
+      - name: Upload JUnit report artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: junit-report
+          path: reports/junit.xml
